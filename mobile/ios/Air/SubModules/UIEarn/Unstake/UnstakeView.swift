@@ -60,7 +60,7 @@ fileprivate struct AmountSection: View {
             amount: $model.amount,
             token: displayToken,
             balance: model.maxAmount,
-            insufficientFunds: model.insufficientFunds,
+            insufficientFunds: false,
             amountInBaseCurrency: $model.amountInBaseCurrency,
             switchedToBaseCurrencyInput: $model.switchedToBaseCurrencyInput,
             fee: model.fee,

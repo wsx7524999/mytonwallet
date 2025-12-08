@@ -134,20 +134,7 @@ public class UnstakeVC: WViewController, WalletCoreData.EventsObserver {
         }
         
         if let amount {
-            let maxAmount = model.maxAmount
-            let calculatedFee = getStakeOperationFee(stakingType: stakingState.type, stakeOperation: .stake).gas ?? 0
-            let toncoinBalance = model.nativeBalance
-            
-            if amount > maxAmount {
-                model.insufficientFunds = true
-                continueButton.apply(config: .insufficientStakedBalance)
-            } else if toncoinBalance < calculatedFee {
-                model.insufficientFunds = true
-                continueButton.apply(config: .insufficientFee(minAmount: calculatedFee))
-            } else {
-                model.insufficientFunds = false
-                continueButton.apply(config: .continue(title: title, isEnabled: amount > 0))
-            }
+            continueButton.apply(config: .continue(title: title, isEnabled: amount > 0))
         } else {
             continueButton.isEnabled = false
         }

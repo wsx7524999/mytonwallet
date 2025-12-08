@@ -96,8 +96,6 @@ final class UnstakeModel: ObservableObject, WalletCoreData.EventsObserver {
     
     // Validation
 
-    @Published var insufficientFunds: Bool = false
-
     @Published var shouldRenderBalanceWithSmallFee = false
     
     enum WithdrawalType {
@@ -108,7 +106,7 @@ final class UnstakeModel: ObservableObject, WalletCoreData.EventsObserver {
     @Published var withdrawalType: WithdrawalType = .instant
     
     var canContinue: Bool {
-        !insufficientFunds && (amount ?? 0 > 0)
+        (amount ?? 0 > 0)
     }
     
     private var observers: Set<AnyCancellable> = []
