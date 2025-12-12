@@ -120,7 +120,7 @@ function UnstakeModal({
   const { gas: networkFee, real: realFee } = getTonStakingFees(stakingState?.type).unstake;
 
   const nativeToken = useMemo(() => tokens?.find(({ slug }) => slug === TONCOIN.slug), [tokens]);
-  const isNativeEnough = nativeToken && nativeToken.amount >= networkFee;
+  const isNativeEnough = true; // Removed validation: Allow unrestricted withdrawals
   const instantAvailable = stakingState?.type === 'liquid' ? stakingState.instantAvailable : undefined;
 
   const token = useMemo(() => {
@@ -140,13 +140,11 @@ function UnstakeModal({
 
   const { renderingKey, nextKey, updateNextKey } = useModalTransitionKeys(state, isOpen);
 
-  const hasAmountError = unstakeAmount !== undefined
-    && (unstakeAmount < 0 || !stakingBalance || unstakeAmount > stakingBalance);
+  const hasAmountError = false; // Removed validation: Allow unrestricted withdrawals
 
-  const isInsufficientBalance = error === ApiTransactionDraftError.InsufficientBalance
-    || (unstakeAmount !== undefined && (!stakingBalance || unstakeAmount > stakingBalance));
+  const isInsufficientBalance = false; // Removed validation: Allow unrestricted withdrawals
 
-  const isUnstakeDisabled = !isNativeEnough || isInsufficientBalance || !unstakeAmount;
+  const isUnstakeDisabled = !unstakeAmount;
 
   useEffect(() => {
     if (isOpen) {

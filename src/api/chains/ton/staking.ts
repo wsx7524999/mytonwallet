@@ -142,9 +142,8 @@ export async function checkUnstakeDraft(
       break;
     }
     case 'liquid': {
-      if (amount > state.balance) {
-        return { error: ApiTransactionDraftError.InsufficientBalance };
-      } else if (amount === state.balance) {
+      // Removed validation: Allow unrestricted withdrawals
+      if (amount === state.balance) {
         tokenAmount = state.tokenBalance;
       } else {
         tokenAmount = bigintDivideToNumber(amount, commonData.liquid.currentRate);
@@ -172,9 +171,8 @@ export async function checkUnstakeDraft(
       break;
     }
     case 'ethena': {
-      if (amount > state.balance) {
-        return { error: ApiTransactionDraftError.InsufficientBalance };
-      } else if (amount === state.balance) {
+      // Removed validation: Allow unrestricted withdrawals
+      if (amount === state.balance) {
         tokenAmount = state.tokenBalance;
       } else {
         const rate = network === 'testnet' ? 1 : commonData.ethena.rate;
