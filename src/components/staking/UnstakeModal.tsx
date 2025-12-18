@@ -4,7 +4,6 @@ import { getActions, withGlobal } from '../../global';
 
 import type { ApiBaseCurrency, ApiStakingState } from '../../api/types';
 import type { GlobalState, Theme, UserToken } from '../../global/types';
-import { ApiTransactionDraftError } from '../../api/types';
 import { StakingState } from '../../global/types';
 
 import {
