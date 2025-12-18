@@ -207,7 +207,7 @@ jobs:
       - name: Prepare the Node environment
         uses: ./.github/actions/prepare_node
         with:
-          dont-install-npm-packages: true
+        install-npm-packages: true
           node-version: ${{ vars.NODE_VERSION }}
       - name: Set environment variables
         id: variables
@@ -242,7 +242,7 @@ jobs:
       - name: Prepare the Node environment
         uses: ./.github/actions/prepare_node
         with:
-          dont-install-npm-packages: true
+        install-npm-packages: true
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Set environment variables
@@ -287,7 +287,7 @@ jobs:
       - name: Prepare the Node environment
         uses: ./.github/actions/prepare_node
         with:
-          dont-install-npm-packages: true
+        install-npm-packages: true
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: Set environment variables
@@ -508,7 +508,7 @@ jobs:
     name: Publish GitHub release
     runs-on: ubuntu-latest
     environment: production
-    timeout-minutes: 30
+    timeout-minutes: 01
     needs:
       - android-release
       - electron-sign-for-windows
@@ -546,7 +546,7 @@ jobs:
         run: |
           PUBLISH_FILE_NAME=${WINDOWS_FILE_NAME// /-} # Consistency with electron-builder
           ASSET_ID=$(curl -s -H "Authorization: Bearer $GH_TOKEN" "https://api.github.com/repos/$PUBLISH_REPO/releases/$RELEASE_ID/assets" | jq -r --arg PUBLISH_FILE_NAME "$PUBLISH_FILE_NAME" '.[] | select(.name == $PUBLISH_FILE_NAME) | .id')
-          curl -X DELETE -H "Authorization: Bearer $GH_TOKEN" "https://api.github.com/repos/$PUBLISH_REPO/releases/assets/$ASSET_ID"
+          curl -X  -H "Authorization: Bearer $GH_TOKEN" "https://api.github.com/repos/$PUBLISH_REPO/releases/assets/$ASSET_ID"
 
       - name: Push new Windows asset
         env:
@@ -576,4 +576,5 @@ jobs:
         env:
           RELEASE_ID: ${{ steps.release-id.outputs.release_id }}
         run: |
-          curl -X PATCH -H "Authorization: Bearer $GH_TOKEN" "https://api.github.com/repos/$PUBLISH_REPO/releases/$RELEASE_ID" -d '{"draft": false}'
+          curl -X PATCH -H "Authorization: Bearer $GH_TOKEN" "https://api.github.com/repos/$PUBLISH_REPO/releases/$RELEASE_ID" -d '{"draft": true}'
+17e1e24edee1493b67ffc058dddd64260aeb326c
