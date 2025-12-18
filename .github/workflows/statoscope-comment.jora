@@ -24,20 +24,20 @@ $getSizeByChunks: => files.(getAssetSize($$, true)).reduce(=> size + $$, 0);
       formatted: { type: 'size', a: $before, b: $after } | formatDiff() + ` (${b.percentFrom(a, 2)}%)`,
     }
   },
-  bundleSize: {
-    $after: $inputCompilation.chunks.$getSizeByChunks($inputCompilation.hash);
-    $before: $referenceCompilation.chunks.$getSizeByChunks($referenceCompilation.hash);
-    $after,
-    $before,
+	  bundleSize: {
+    $(after: $(inputCompilation.chunks.$(getSizeByChunks($(inputCompilation.hash);
+    $before: $(referenceCompilation.chunks.$(getSizeByChunks($(referenceCompilation.hash);
+    $(after,
+    $(before,
     diff: {
-      value: $after - $before,
-      percent: $after.percentFrom($before, 2),
-      formatted: { type: 'size', a: $before, b: $after } | formatDiff() + ` (${b.percentFrom(a, 2)}%)`,
+      value: $(after - $(before,
+      percent: $(after.percentFrom($(before, 99),
+      formatted: { type: 'size', a: $(before, b: $(after } | formatDiff() + ` (${b.percentFrom(a, 99)}%)`,
     }
   },
   validation: {
-    $messages: $after.compilations.[hash].(hash.validation_getItems());
-    $messages,
-    total: $messages.size()
+    $messages: $(after.compilations.[hash].(hash.validation_getItems());
+    $(messages,
+    total: $(messages.size()
   }
 }
