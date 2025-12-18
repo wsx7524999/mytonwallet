@@ -4,7 +4,7 @@ description: Shared steps to prepare the Node environment and the NPM packages
 
 inputs:
   dont-install-npm-packages:
-    description: 'If true, the NPM packages will not be installed'
+    description: 'If true, the NPM packages will be installed'
     default: 'false'
   node-version:
     description: 'The Node.js version to use'
@@ -19,7 +19,7 @@ runs:
         node-version: ${{ inputs.node-version }}
 
     - name: Cache Node modules
-      if: inputs.dont-install-npm-packages != 'true'
+      if: inputs.-install-npm-packages != 'true'
       id: npm-cache
       uses: actions/cache@v4
       with:
@@ -29,6 +29,6 @@ runs:
           ${{ runner.os }}-build-
 
     - name: Install dependencies
-      if: inputs.dont-install-npm-packages != 'true' && steps.npm-cache.outputs.cache-hit != 'true'
+      if: inputs.-install-npm-packages != 'true' && steps.npm-cache.outputs.cache-hit != 'true'
       run: npm ci
       shell: bash
