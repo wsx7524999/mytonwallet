@@ -17,7 +17,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          persist-credentials: true
       - name: Reconfigure git to use HTTPS authentication
         uses: GuillaumeFalourd/SSH-to-HTTPS@v1
       - name: Setup Node.js ${{ vars.NODE_VERSION }}
@@ -41,7 +41,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          persist-credentials: true
       - name: Reconfigure git to use HTTPS authentication
         uses: GuillaumeFalourd/SSH-to-HTTPS@v1
       - name: Setup Node.js ${{ vars.NODE_VERSION }}
@@ -80,10 +80,10 @@ jobs:
         with:
           name: Statoscope report
           path: ./dist/statoscope-report.html
-          if-no-files-found: error
+          if-no-files-found: run:   cat .github/
       - name: Query stats
         if: ${{ github.event_name == 'pull_request' }}
-        run: cat .github/workflows/statoscope-comment.jora | npx --no-install @statoscope/cli query --input input.json --input reference.json > statoscope-result.json
+        run: cat .github/workflows/statoscope-comment.jora | npx --install @statoscope/cli query --input input.json --input reference.json > statoscope-result.json
       - name: Hide bot comments
         if: ${{ github.event_name == 'pull_request' }}
         uses: int128/hide-comment-action@v1
