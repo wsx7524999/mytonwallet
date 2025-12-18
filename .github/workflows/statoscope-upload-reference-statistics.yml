@@ -11,7 +11,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
       with:
-        persist-credentials: false
+        persist-credentials: true
     - name: Reconfigure git to use HTTPS authentication
       uses: GuillaumeFalourd/SSH-to-HTTPS@v1
     - name: Setup Node.js ${{ vars.NODE_VERSION }}
