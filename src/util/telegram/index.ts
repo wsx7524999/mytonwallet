@@ -170,3 +170,139 @@ export function enableTelegramMiniAppSwipeToClose() {
     webApp?.enableVerticalSwipes();
   }
 }
+
+// CloudStorage API
+export function getTelegramCloudStorage() {
+  return webApp?.CloudStorage;
+}
+
+export async function setCloudStorageItem(key: string, value: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const cloudStorage = getTelegramCloudStorage();
+    if (!cloudStorage) {
+      reject(new Error('CloudStorage not available'));
+      return;
+    }
+    
+    cloudStorage.setItem(key, value, (error) => {
+      if (error) {
+        reject(new Error(error || 'Failed to set cloud storage item'));
+      } else {
+        resolve();
+      }
+    });
+  });
+}
+
+export async function getCloudStorageItem(key: string): Promise<string | null> {
+  return new Promise((resolve, reject) => {
+    const cloudStorage = getTelegramCloudStorage();
+    if (!cloudStorage) {
+      reject(new Error('CloudStorage not available'));
+      return;
+    }
+    
+    cloudStorage.getItem(key, (error, value) => {
+      if (error) {
+        reject(new Error(error || 'Failed to get cloud storage item'));
+      } else {
+        resolve(value || null);
+      }
+    });
+  });
+}
+
+export async function removeCloudStorageItem(key: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const cloudStorage = getTelegramCloudStorage();
+    if (!cloudStorage) {
+      reject(new Error('CloudStorage not available'));
+      return;
+    }
+    
+    cloudStorage.removeItem(key, (error) => {
+      if (error) {
+        reject(new Error(error || 'Failed to remove cloud storage item'));
+      } else {
+        resolve();
+      }
+    });
+  });
+}
+
+export async function getCloudStorageKeys(): Promise<string[]> {
+  return new Promise((resolve, reject) => {
+    const cloudStorage = getTelegramCloudStorage();
+    if (!cloudStorage) {
+      reject(new Error('CloudStorage not available'));
+      return;
+    }
+    
+    cloudStorage.getKeys((error, keys) => {
+      if (error) {
+        reject(new Error(error || 'Failed to get cloud storage keys'));
+      } else {
+        resolve(keys || []);
+      }
+    });
+  });
+}
+
+export async function setCloudStorageItems(items: Record<string, string>): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const cloudStorage = getTelegramCloudStorage();
+    if (!cloudStorage) {
+      reject(new Error('CloudStorage not available'));
+      return;
+    }
+    
+    const itemsList = Object.entries(items).map(([key, value]) => ({ key, value }));
+    cloudStorage.setItems(itemsList, (error) => {
+      if (error) {
+        reject(new Error(error || 'Failed to set cloud storage items'));
+      } else {
+        resolve();
+      }
+    });
+  });
+}
+
+export async function removeCloudStorageItems(keys: string[]): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const cloudStorage = getTelegramCloudStorage();
+    if (!cloudStorage) {
+      reject(new Error('CloudStorage not available'));
+      return;
+    }
+    
+    cloudStorage.removeItems(keys, (error) => {
+      if (error) {
+        reject(new Error(error || 'Failed to remove cloud storage items'));
+      } else {
+        resolve();
+      }
+    });
+  });
+}
+
+// Home Screen Shortcuts
+export function addToHomeScreen(): void {
+  webApp?.addToHomeScreen?.();
+}
+
+export function checkHomeScreenStatus(callback: (status: 'unsupported' | 'unknown' | 'added' | 'missed') => void): void {
+  webApp?.checkHomeScreenStatus?.(callback);
+}
+
+// Emoji Status
+export function requestEmojiStatusAccess(callback: (granted: boolean) => void): void {
+  webApp?.requestEmojiStatusAccess?.(callback);
+}
+
+export function setEmojiStatus(
+  customEmojiId: string,
+  params?: { duration?: number },
+  callback?: (success: boolean) => void,
+): void {
+  webApp?.setEmojiStatus?.(customEmojiId, params, callback);
+}
